@@ -1,0 +1,119 @@
+run:
+  concurrency: 8
+  deadline: 1m
+  issues-exit-code: 1
+  modules-download-mode: readonly
+  tests: true
+  skip-dirs:
+    - vendor
+  skip-files:
+    - mock_*.go
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  gocritic:
+    disabled-checks:
+      - appendAssign
+  gocyclo:
+    min-complexity: 10
+  govet:
+    check-shadowing: false
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: atomic
+      - name: line-length-limit
+        severity: error
+        arguments: [80]
+      - name: unhandled-error
+        arguments : ["fmt.Printf", "myFunction"]
+
+
+linters:
+  disable-all: true
+  enable:
+    - revive
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    - funlen
+    - gochecknoinits
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    # - golint
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    # - interfacer
+    - misspell
+    - nakedret
+    # - scopelint
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - whitespace
+  fast: false
+
+issues:
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    - path: helpers/shell_escape.go
+      linters:
+        - gocyclo
+    - path: executors/kubernetes/kubernetes_test.go
+      linters:
+        - gocyclo
+    - path: executors/kubernetes/util_test.go
+      linters:
+        - gocyclo
+    - path: executors/kubernetes/exec_test.go
+      linters:
+        - gocyclo
+    - path: executors/parallels/
+      linters:
+        - gocyclo
+    - path: executors/virtualbox/
+      linters:
+        - gocyclo
+    - linters:
+        - golint
+      text: "don't use ALL_CAPS in Go names; use CamelCase"
+    - linters:
+        - golint
+      text: "don't use an underscore in package name"
+    - path: ".*_test.go"
+      linters:
+        - goconst
+    - path: ".*_test.go"
+      linters:
+        - bodyclose
+    - path: ".*_test.go"
+      text: "regexpMust"
+      linters:
+        - gocritic
+    - path: referees/prometheus_api.go
+      linters:
+        - deadcode
+    - path: executors/docker/docker_command_test.go # Ignore until https://gitlab.com/gitlab-org/gitlab-runner/-/issues/25385 is solved
+      linters:
+        - unused

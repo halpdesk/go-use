@@ -2,6 +2,24 @@
 use is a go utility library using go1.18 generics  
 created by halpdesk 2022-01-22 
 
+## use/number
+
+**Reduce** reduces a slice with numeric members to one single number, according to a reducer function.
+
+```go
+    numbers := []int{1, 2, 3}
+    reduced := Reduce(numbers, func(p, n int) int { return p + n })
+    // reduced is now 6
+```
+
+**Sum** sums a slice with numeric members.
+
+```go
+    numbers := []int{-1, 2, -3}
+    sum := Sum(numbers)
+    // sum is now -2
+```
+
 ## use/slice
 
 **Map** updates a slice by applying a function to all members of a slice. The apply function must use and return the same type as the elements of the slice.
@@ -34,9 +52,21 @@ created by halpdesk 2022-01-22
 **IndexOf** is used to determine the index in a slice of a given value.
 
 ```go
-   strs := []string{"foo", "bar", "baz"}
-   index := slice.IndexOf(strs, "baz")
-   // index is now 2
+    strs := []string{"foo", "bar", "baz"}
+    index := slice.IndexOf(strs, "baz")
+    // index is now 2
+```
+
+**Chunk** is used to divide a slize of any length into smaller chunks
+
+```go
+    strs := []string{"foo", "bar", "baz", "faz", "maz"}
+    chunks := slice.Chunk(strs, 2)
+    // chunks is now [][]string{
+    //    {"foo", "bar"}, 
+    //    {"baz", "faz"}, 
+    //    {"maz"},
+    // }
 ```
 
 ## use/kind
@@ -69,6 +99,19 @@ created by halpdesk 2022-01-22
         zeroTime := time.Now()
     }
 ```
+
+## list of ideas to implement
+
+* slice.Contains() - check if a slice has a member
+* slice.Remove() - remove members of a slice according to a removal function
+* slice.Unique() - return slice with unique elements only
+* slice.Count() - returns the number of elements
+* slice.Flatten() - flatten any matrix
+* slice.GroupBy() - group any matrix by given key
+* slice.ForEach() - ...
+* sorting functions
+* drop, tail, take, 
+* number.Max() and number.Min() (of slice with anything that is orderable)
 
 ## update and test with 1.18
 ```sh

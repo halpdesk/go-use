@@ -103,3 +103,31 @@ func TestIndexOf(t *testing.T) {
 		assert.Equal(t, test.Expected, IndexOf(test.Original, test.Element))
 	}
 }
+
+func TestChunk(t *testing.T) {
+	// ints test
+	for _, test := range []struct {
+		Original []int
+		Size     int
+		Expected [][]int
+	}{
+		{[]int{1, 2, 3}, 1, [][]int{{1}, {2}, {3}}},
+		{[]int{1, 2, 3}, 2, [][]int{{1, 2}, {3}}},
+		{[]int{1, 2, 3}, 3, [][]int{{1, 2, 3}}},
+	} {
+		assert.Equal(t, test.Expected, Chunk(test.Original, test.Size))
+	}
+
+	// strings test
+	for _, test := range []struct {
+		Original []string
+		Size     int
+		Expected [][]string
+	}{
+		{[]string{"foo", "bar", "baz"}, 1, [][]string{{"foo"}, {"bar"}, {"baz"}}},
+		{[]string{"foo", "bar", "baz"}, 2, [][]string{{"foo", "bar"}, {"baz"}}},
+		{[]string{"foo", "bar", "baz"}, 3, [][]string{{"foo", "bar", "baz"}}},
+	} {
+		assert.Equal(t, test.Expected, Chunk(test.Original, test.Size))
+	}
+}

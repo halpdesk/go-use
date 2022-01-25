@@ -36,3 +36,10 @@ func IndexOf[T comparable](slice []T, item T) int {
     }
     return -1
 }
+
+func Chunk[T any](slice []T, size int) (chunks [][]T) {
+	for size < len(slice) {
+		slice, chunks = slice[size:], append(chunks, slice[0:size:size])
+	}
+	return append(chunks, slice)
+}
