@@ -1,12 +1,47 @@
 package slice
 
 import (
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func TestForEach(t *testing.T) {
+	for _, test := range []struct {
+		Slice    []string
+		Call     func(key int, val string)
+		Expected string
+	}{
+		{[]string{"world", "halpdesk"}, func(key int, val string) { fmt.Printf("%d - hello %s\n", key, val) }, "0 - hello world\n1 - hello halpdesk\n"},
+	} {
+		rescueStdout := os.Stdout
+		r, w, _ := os.Pipe()
+		os.Stdout = w
+		ForEach(test.Slice, test.Call)
+		w.Close()
+		out, _ := ioutil.ReadAll(r)
+		os.Stdout = rescueStdout
+		assert.Equal(t, test.Expected, string(out))
+	}
+}
+
+func TestForEachWithErr(t *testing.T) {
+	for _, test := range []struct {
+		Slice    []int
+		Call     func(key int, val int) error
+		Expected error
+	}{
+		{[]int{1}, func(key int, val int) error { return nil }, nil},
+		{[]int{0}, func(key int, val int) error { return errors.New("some err") }, errors.New("some err")},
+	} {
+		assert.Equal(t, test.Expected, ForEachWithErr(test.Slice, test.Call))
+	}
+}
 
 func TestMap(t *testing.T) {
 	// ints test

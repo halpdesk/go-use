@@ -8,7 +8,7 @@ created by halpdesk 2022-01-22
 
 ```go
     numbers := []int{1, 2, 3}
-    reduced := Reduce(numbers, func(p, n int) int { return p + n })
+    reduced := number.Reduce(numbers, func(p, n int) int { return p + n })
     // reduced is now 6
 ```
 
@@ -16,17 +16,35 @@ created by halpdesk 2022-01-22
 
 ```go
     numbers := []int{-1, 2, -3}
-    sum := Sum(numbers)
+    sum := number.Sum(numbers)
     // sum is now -2
 ```
 
 ## use/slice
 
+**ForEach** calls a custom function for each of a slice's elements, with key and value as inputs.
+
+```go
+    strings := []string{"world", "halpdesk"}
+    slice.ForEach(strings, func(key int, val string) { fmt.Printf("%d - hello %s\n", key, val) })
+    // the above prints:
+    // 0 - hello world
+    // 1 - hello halpdesk
+```
+
+**ForEachWithErr** is the same as ForEach but returns an error if any call returns an error
+
+```go
+    strings := []string{"world", "halpdesk"}
+    err := slice.ForEachWithErr(strings, func(key int, val string) error { return errors.New("some error") })
+    // err is now "some error" and the function terminated at the slice's first element "world"
+```
+
 **Map** updates a slice by applying a function to all members of a slice. The apply function must use and return the same type as the elements of the slice.
 
 ```go
     numbers := []int{2,3,5}
-    slice.Map(numbers, func(int a) int {return a*a})
+    slice.Map(numbers, func(a int) int {return a*a})
     // numbers is now []int{4,9,25}
 ```
 
@@ -52,16 +70,16 @@ created by halpdesk 2022-01-22
 **IndexOf** is used to determine the index in a slice of a given value.
 
 ```go
-    strs := []string{"foo", "bar", "baz"}
-    index := slice.IndexOf(strs, "baz")
+    strings := []string{"foo", "bar", "baz"}
+    index := slice.IndexOf(strings, "baz")
     // index is now 2
 ```
 
 **RemoveIndex** is used to remove element of a slice, given an index.
 
 ```go
-    strs := []string{"foo", "bar", "baz"}
-    updated := slice.RemoveIndex(strs, 1)
+    strings := []string{"foo", "bar", "baz"}
+    updated := slice.RemoveIndex(strings, 1)
     // updated is now []string{"foo", "baz"}
 ```
 
@@ -76,8 +94,8 @@ created by halpdesk 2022-01-22
 **Chunk** is used to divide a slize of any length into smaller chunks.
 
 ```go
-    strs := []string{"foo", "bar", "baz", "faz", "maz"}
-    chunks := slice.Chunk(strs, 2)
+    strings := []string{"foo", "bar", "baz", "faz", "maz"}
+    chunks := slice.Chunk(strings, 2)
     // chunks is now [][]string{
     //    {"foo", "bar"}, 
     //    {"baz", "faz"}, 

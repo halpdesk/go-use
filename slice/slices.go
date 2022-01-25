@@ -1,5 +1,21 @@
 package slice
 
+func ForEach[T any](slice []T, call func(int, T)) {
+	for i, element := range slice {
+		call(i, element)
+	}
+}
+
+func ForEachWithErr[T any](slice []T, call func(int, T) error) error {
+	var err error
+	for i, element := range slice {
+		err = call(i, element)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
 
 // Map updates a slice by applying a function to all members of a slice. The apply function must use and return the same type as the elements of the slice.
 func Map[T any](slice []T, apply func(T) T) {
