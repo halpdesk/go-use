@@ -28,6 +28,32 @@ func Filter[T comparable](slice []T, filter func(T) bool) []T {
 	return updated
 }
 
+func RemoveIndex[T comparable](slice []T, i int) []T {
+	var empty T
+	copy(slice[i:], slice[i+1:]) // Shift a[i+1:] left one index.
+	slice[len(slice)-1] = empty  // Erase last element (write zero value).
+	return slice[:len(slice)-1] // Truncate slice.
+}
+
+func RemoveMatching[T comparable](slice []T, removal func(T) bool) []T {
+	var updated []T
+	for _, element := range slice {
+		if !removal(element) {
+			updated = append(updated, element)
+		}
+	}
+	return updated
+}
+
+func Contains[T comparable](slice []T, item T) bool {
+    for _, element := range slice {
+        if element == item {
+            return true
+        }
+    }
+    return false
+}
+
 func IndexOf[T comparable](slice []T, item T) int {
     for i, element := range slice {
         if element == item {
@@ -42,4 +68,14 @@ func Chunk[T any](slice []T, size int) (chunks [][]T) {
 		slice, chunks = slice[size:], append(chunks, slice[0:size:size])
 	}
 	return append(chunks, slice)
+}
+
+func Flatten[T any](slice [][]T) []T {
+	var flattened []T
+	for i := range slice {
+		for j := range slice[i] {
+			flattened = append(flattened, slice[i][j])
+		}
+	}
+	return flattened
 }

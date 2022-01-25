@@ -57,7 +57,23 @@ created by halpdesk 2022-01-22
     // index is now 2
 ```
 
-**Chunk** is used to divide a slize of any length into smaller chunks
+**RemoveIndex** is used to remove element of a slice, given an index.
+
+```go
+    strs := []string{"foo", "bar", "baz"}
+    updated := slice.RemoveIndex(strs, 1)
+    // updated is now []string{"foo", "baz"}
+```
+
+**RemoveMatching** is used to remove elements of a slice, according to a removal function.
+
+```go
+    numbers := []int{1, 3, 5, 7}
+    updated := slice.RemoveIndex(numbers, func(i int) bool { return i > 4 })
+    // updated is now []int{5, 7}
+```
+
+**Chunk** is used to divide a slize of any length into smaller chunks.
 
 ```go
     strs := []string{"foo", "bar", "baz", "faz", "maz"}
@@ -67,6 +83,14 @@ created by halpdesk 2022-01-22
     //    {"baz", "faz"}, 
     //    {"maz"},
     // }
+```
+
+**Flatten** is used to flatten any matrix into a flat 1-dimensional slice.
+
+```go
+    matrix := [][]string{{"foo", "bar"}, {"baz", "faz"}, {"maz"}}
+    flattened := slice.Flatten(matrix)
+    // flattened is now []string{"foo", "bar", "baz", "faz", "maz"}
 ```
 
 ## use/kind
@@ -102,11 +126,7 @@ created by halpdesk 2022-01-22
 
 ## list of ideas to implement
 
-* slice.Contains() - check if a slice has a member
-* slice.Remove() - remove members of a slice according to a removal function
 * slice.Unique() - return slice with unique elements only
-* slice.Count() - returns the number of elements
-* slice.Flatten() - flatten any matrix
 * slice.GroupBy() - group any matrix by given key
 * slice.ForEach() - ...
 * sorting functions
