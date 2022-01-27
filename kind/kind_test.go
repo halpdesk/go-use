@@ -8,38 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestIsEmptyValue(t *testing.T) {
-	assert.Equal(t, true, isEmptyValue(int(0)))
-	assert.Equal(t, false, isEmptyValue(int(1)))
-	assert.Equal(t, true, isEmptyValue(string("")))
-	assert.Equal(t, false, isEmptyValue(string("foo")))
-	assert.Equal(t, true, isEmptyValue(float64(0)))
-	assert.Equal(t, false, isEmptyValue(float64(1)))
-	assert.Equal(t, true, isEmptyValue(0))
-	assert.Equal(t, false, isEmptyValue(1))
-	assert.Equal(t, true, isEmptyValue(""))
-	assert.Equal(t, false, isEmptyValue("foo"))
-	assert.Equal(t, true, isEmptyValue(false))
-	assert.Equal(t, true, isEmptyValue(time.Time{}))
-	assert.Equal(t, false, isEmptyValue(time.Now()))
-}
-
 func TestIsZero(t *testing.T) {
-	// DOES NOT WORK AT THE MOMENT
-	// "cannot use generic type Thing[T any] without instantiation" in test case struct declaration
-
-	// type Thing[T any] *T
-
-	// for _, test := range []struct {
-	// 	Test 	 Thing
-	// 	Expected bool
-	// }{
-	// 	{int(0), true},
-	// 	{string(""), true},
-	// 	{string("foo"), false},
-	// }{
-	// 	assert.Equal(t, test.Expected, IsZero(test.Test))
-	// }
 	assert.Equal(t, true, IsZero(int(0)))
 	assert.Equal(t, false, IsZero(int(1)))
 	assert.Equal(t, true, IsZero(string("")))
@@ -54,6 +23,22 @@ func TestIsZero(t *testing.T) {
 	assert.Equal(t, false, IsZero(true))
 	assert.Equal(t, true, IsZero(time.Time{}))
 	assert.Equal(t, false, IsZero(time.Now()))
+}
+
+func TestIsEmptyValue(t *testing.T) {
+	assert.Equal(t, true, isEmptyValue(int(0)))
+	assert.Equal(t, false, isEmptyValue(int(1)))
+	assert.Equal(t, true, isEmptyValue(string("")))
+	assert.Equal(t, false, isEmptyValue(string("foo")))
+	assert.Equal(t, true, isEmptyValue(float64(0)))
+	assert.Equal(t, false, isEmptyValue(float64(1)))
+	assert.Equal(t, true, isEmptyValue(0))
+	assert.Equal(t, false, isEmptyValue(1))
+	assert.Equal(t, true, isEmptyValue(""))
+	assert.Equal(t, false, isEmptyValue("foo"))
+	assert.Equal(t, true, isEmptyValue(false))
+	assert.Equal(t, true, isEmptyValue(time.Time{}))
+	assert.Equal(t, false, isEmptyValue(time.Now()))
 }
 
 func TestPatch(t *testing.T) {
